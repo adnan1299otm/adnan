@@ -77,25 +77,25 @@ const App: React.FC = () => {
 
                 <div className="space-y-12">
                   <div className="space-y-6">
-                    <p className="text-indigo-500 font-black uppercase tracking-[0.3em] text-[10px]">Real Humans</p>
-                    <h2 className="text-5xl md:text-6xl font-black text-white leading-[1.1] tracking-tight">
+                    <p className="text-indigo-400 font-black uppercase tracking-[0.3em] text-[10px]">Real Humans</p>
+                    <h2 className="text-4xl md:text-6xl font-black text-white leading-[1.1] tracking-tight">
                       Direct Technical <br /> Support Nexus.
                     </h2>
-                    <p className="text-slate-400 text-xl leading-relaxed max-w-lg font-medium">
+                    <p className="text-slate-300 text-lg md:text-xl leading-relaxed max-w-lg font-medium">
                       We don't hide behind chatbots. Our core engineering team is accessible via direct lines for enterprise-level troubleshooting and architectural reviews.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
                     <div className="space-y-3">
-                      <p className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-600">WhatsApp Direct</p>
-                      <a href="https://wa.me/01743951355" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-white hover:text-indigo-500 transition-colors">
+                      <p className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">WhatsApp Direct</p>
+                      <a href="https://wa.me/01743951355" target="_blank" rel="noopener noreferrer" className="text-xl md:text-2xl font-bold text-white hover:text-indigo-400 transition-colors">
                         +01743951355
                       </a>
                     </div>
                     <div className="space-y-3">
-                      <p className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-600">Email Nexus</p>
-                      <a href="mailto:arafath1299otm@gmail.com" className="text-2xl font-bold text-white hover:text-indigo-500 transition-colors">
+                      <p className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">Email Nexus</p>
+                      <a href="mailto:arafath1299otm@gmail.com" className="text-xl md:text-2xl font-bold text-white hover:text-indigo-400 transition-colors">
                         arafath1299otm@gmail.com
                       </a>
                     </div>
@@ -111,22 +111,22 @@ const App: React.FC = () => {
                         </svg>
                       </div>
                       <div className="text-right">
-                        <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">Audit Protocol</p>
-                        <p className="text-[10px] font-black text-[#00D95F] uppercase tracking-widest">Active Status</p>
+                        <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Audit Protocol</p>
+                        <p className="text-[10px] font-black text-[#00E66B] uppercase tracking-widest">Active Status</p>
                       </div>
                     </div>
 
-                    <div className="bg-[#111827]/50 backdrop-blur-sm border border-white/[0.05] p-8 rounded-2xl">
+                    <div className="bg-[#111827]/50 backdrop-blur-sm border border-white/[0.08] p-6 md:p-8 rounded-2xl">
                       <div className="flex items-center space-x-3 mb-4">
-                        <div className="w-2 h-2 bg-[#00D95F] rounded-full animate-pulse"></div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#00D95F]">System Verified</p>
+                        <div className="w-2 h-2 bg-[#00E66B] rounded-full animate-pulse"></div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#00E66B]">System Verified</p>
                       </div>
-                      <p className="text-lg text-slate-300 font-bold leading-relaxed italic">
+                      <p className="text-base md:text-lg text-slate-200 font-bold leading-relaxed italic">
                         "System integrity confirmed. No riba-based financial modules detected. Security proxy engaged."
                       </p>
                     </div>
 
-                    <div className="flex justify-between items-end text-slate-700 text-[11px] font-mono font-bold uppercase tracking-tighter">
+                    <div className="flex justify-between items-end text-slate-500 text-[10px] font-mono font-bold uppercase tracking-tighter">
                       <div>SEC_LEVEL: ALPHA</div>
                       <div>RSA-4096_VERIFIED</div>
                     </div>
@@ -140,9 +140,9 @@ const App: React.FC = () => {
           <section className="py-40 border-t border-white/[0.05] bg-[#030712]">
             <div className="max-w-5xl mx-auto px-6">
               <div className="text-center mb-24 space-y-6">
-                <p className="text-indigo-500 font-black uppercase tracking-[0.4em] text-[10px]">Compliance Standards</p>
+                <p className="text-indigo-400 font-black uppercase tracking-[0.4em] text-[10px]">Compliance Standards</p>
                 <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">Ethical Workflow Architecture.</h2>
-                <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+                <p className="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
                   We adhere to strict ethical guidelines. Every automation is audited to ensure Sharia-compliant logic and total operational transparency.
                 </p>
               </div>
@@ -174,9 +174,9 @@ const App: React.FC = () => {
 };
 
 const EthicsCard = ({ title, desc }: { title: string, desc: string }) => (
-  <div className="p-12 bg-[#0A0F1E] border border-white/[0.05] rounded-3xl transition-all hover:bg-[#0f152a]">
+  <div className="p-8 md:p-12 bg-[#0A0F1E] border border-white/[0.08] rounded-3xl transition-all hover:bg-[#0f152a] hover:border-white/[0.15]">
     <p className="text-white font-black text-xl mb-5 tracking-tight">{title}</p>
-    <p className="text-slate-500 text-base leading-relaxed font-medium">{desc}</p>
+    <p className="text-slate-400 text-base leading-relaxed font-medium">{desc}</p>
   </div>
 );
 

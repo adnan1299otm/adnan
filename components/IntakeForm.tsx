@@ -1,14 +1,15 @@
 
 import React, { useState } from 'react';
-import { 
-  COMPANY_SIZE_OPTIONS, 
-  TECH_STACK_OPTIONS, 
-  PAIN_POINT_OPTIONS, 
-  CHANNEL_OPTIONS, 
-  TIMELINE_OPTIONS, 
-  BUDGET_OPTIONS 
+import {
+  COMPANY_SIZE_OPTIONS,
+  TECH_STACK_OPTIONS,
+  PAIN_POINT_OPTIONS,
+  CHANNEL_OPTIONS,
+  TIMELINE_OPTIONS,
+  BUDGET_OPTIONS
 } from '../constants';
 import { IntakeFormData, StepKey } from '../types';
+import { SuccessView } from './SuccessView';
 
 interface IntakeFormProps {
   onSubmit: (data: IntakeFormData) => void;
@@ -88,7 +89,7 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isStepValid()) return;
-    
+
     setIsSubmitting(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsSubmitting(false);
@@ -97,27 +98,10 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
   };
 
   if (isSuccess) {
-    return (
-      <div className="fixed inset-0 z-[100] bg-[#030712] flex items-center justify-center p-6 animate-in fade-in duration-500">
-        <div className="max-w-md w-full text-center">
-          <div className="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-indigo-900/40">
-            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="text-5xl font-black text-white mb-6 tracking-tighter">Profile Secured</h2>
-          <p className="text-slate-400 mb-12 text-lg leading-relaxed font-medium">
-            Your organizational data is being processed. An automation architect will be in touch within 24 hours.
-          </p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="px-16 py-5 bg-white text-black font-black uppercase tracking-[0.2em] text-[11px] rounded-xl hover:bg-slate-200 transition-all shadow-2xl"
-          >
-            Finalize
-          </button>
-        </div>
-      </div>
-    );
+    return <SuccessView onReturn={() => {
+      setIsSuccess(false);
+      if (onClose) onClose();
+    }} />;
   }
 
   return (
@@ -125,8 +109,8 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-14">
           <div className="flex flex-col">
-            <span className="font-black text-[10px] tracking-[0.4em] text-indigo-500 uppercase mb-2">Technical Assessment</span>
-            <span className="font-black text-sm tracking-[0.2em] text-white uppercase">Phase {currentStep} <span className="text-slate-700">/ 06</span></span>
+            <span className="font-black text-[10px] tracking-[0.4em] text-indigo-400 uppercase mb-2">Strategic Assessment</span>
+            <span className="font-black text-sm tracking-[0.2em] text-white uppercase">Phase {currentStep} <span className="text-slate-500">/ 06</span></span>
           </div>
           {onClose && (
             <button onClick={onClose} className="text-slate-700 hover:text-white transition-colors p-2 bg-white/[0.03] rounded-lg">
@@ -138,21 +122,21 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
         </div>
 
         <div className="h-2 w-full bg-white/[0.03] rounded-full overflow-hidden mb-20">
-          <div 
+          <div
             className="h-full bg-indigo-600 transition-all duration-1000 ease-out"
             style={{ width: `${(currentStep / 6) * 100}%` }}
           />
         </div>
 
-        <div className="bg-[#0A0F1E] border border-white/[0.05] rounded-[2.5rem] p-12 md:p-20 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.5)]">
+        <div className="bg-[#0A0F1E] border border-white/[0.08] rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 lg:p-20 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.5)]">
           <form onSubmit={handleSubmit} className="space-y-16">
-            
+
             <div className="min-h-[400px]">
               {currentStep === 1 && (
                 <div className="space-y-16 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black text-white tracking-tight">Lead Stakeholder</h3>
-                    <p className="text-slate-500 text-lg font-medium">Core contact for technical implementation.</p>
+                    <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Primary Stakeholder</h3>
+                    <p className="text-slate-400 text-lg font-medium">Designated point of contact for strategic coordination.</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <InputGroup label="Organization" name="companyName" value={formData.companyName} onChange={handleInputChange} placeholder="Enterprise Name" />
@@ -168,23 +152,23 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
               {currentStep === 2 && (
                 <div className="space-y-16 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black text-white tracking-tight">Organization Profile</h3>
-                    <p className="text-slate-500 text-lg font-medium">Operational scale and sector definition.</p>
+                    <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Enterprise Context</h3>
+                    <p className="text-slate-400 text-lg font-medium">Defining organizational scale and sector landscape.</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
                       <label className="block text-[11px] font-black text-slate-500 mb-5 uppercase tracking-[0.3em]">Workforce Scale</label>
-                      <select 
-                        name="companySize" 
-                        value={formData.companySize} 
-                        onChange={handleInputChange} 
-                        className="w-full bg-[#111827] border-2 border-white/[0.05] rounded-2xl px-7 py-5 text-white font-black focus:border-indigo-600 outline-none transition-all appearance-none cursor-pointer text-base shadow-sm"
+                      <select
+                        name="companySize"
+                        value={formData.companySize}
+                        onChange={handleInputChange}
+                        className="w-full bg-[#111827] border-2 border-white/[0.1] rounded-2xl px-6 py-4 text-white font-black focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all appearance-none cursor-pointer text-base shadow-sm"
                       >
                         <option value="">Select Scale...</option>
                         {COMPANY_SIZE_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                       </select>
                     </div>
-                    <InputGroup label="Primary Vertical" name="industry" value={formData.industry} onChange={handleInputChange} placeholder="e.g. Fintech, Logistics" />
+                    <InputGroup label="Industry Vertical" name="industry" value={formData.industry} onChange={handleInputChange} placeholder="e.g. Fintech, Logistics, SaaS" />
                   </div>
                 </div>
               )}
@@ -192,8 +176,8 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
               {currentStep === 3 && (
                 <div className="space-y-16 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black text-white tracking-tight">Technical Stack</h3>
-                    <p className="text-slate-500 text-lg font-medium">Identify current ecosystem integration points.</p>
+                    <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Ecosystem Architecture</h3>
+                    <p className="text-slate-400 text-lg font-medium">Identify core infrastructure for logic synchronization.</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {TECH_STACK_OPTIONS.map(opt => (
@@ -206,8 +190,8 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
               {currentStep === 4 && (
                 <div className="space-y-16 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black text-white tracking-tight">System Friction</h3>
-                    <p className="text-slate-500 text-lg font-medium">Identify critical operational bottlenecks.</p>
+                    <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Process Friction</h3>
+                    <p className="text-slate-400 text-lg font-medium">Locate critical bottlenecks limiting manual scalability.</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {PAIN_POINT_OPTIONS.map(opt => (
@@ -220,8 +204,8 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
               {currentStep === 5 && (
                 <div className="space-y-16 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black text-white tracking-tight">Surface Channels</h3>
-                    <p className="text-slate-500 text-lg font-medium">Active touchpoints requiring logic layers.</p>
+                    <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Logic Endpoints</h3>
+                    <p className="text-slate-400 text-lg font-medium">Active touchpoints requiring automated intelligence layers.</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {CHANNEL_OPTIONS.map(opt => (
@@ -234,17 +218,17 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
               {currentStep === 6 && (
                 <div className="space-y-16 animate-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-4">
-                    <h3 className="text-4xl font-black text-white tracking-tight">Implementation Logic</h3>
-                    <p className="text-slate-500 text-lg font-medium">Timeline and strategic allocation.</p>
+                    <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight">Strategic Planning</h3>
+                    <p className="text-slate-400 text-lg font-medium">Coordinating deployment priority and resource allocation.</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
                       <label className="block text-[11px] font-black text-slate-500 mb-5 uppercase tracking-[0.3em]">Deployment Timeline</label>
-                      <select 
-                        name="timeline" 
-                        value={formData.timeline} 
-                        onChange={handleInputChange} 
-                        className="w-full bg-[#111827] border-2 border-white/[0.05] rounded-2xl px-7 py-5 text-white font-black focus:border-indigo-600 outline-none transition-all appearance-none cursor-pointer text-base shadow-sm"
+                      <select
+                        name="timeline"
+                        value={formData.timeline}
+                        onChange={handleInputChange}
+                        className="w-full bg-[#111827] border-2 border-white/[0.1] rounded-2xl px-6 py-4 text-white font-black focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all appearance-none cursor-pointer text-base shadow-sm"
                       >
                         <option value="">Select Timeline...</option>
                         {TIMELINE_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
@@ -252,11 +236,11 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
                     </div>
                     <div>
                       <label className="block text-[11px] font-black text-slate-500 mb-5 uppercase tracking-[0.3em]">Allocation Range</label>
-                      <select 
-                        name="budget" 
-                        value={formData.budget} 
-                        onChange={handleInputChange} 
-                        className="w-full bg-[#111827] border-2 border-white/[0.05] rounded-2xl px-7 py-5 text-white font-black focus:border-indigo-600 outline-none transition-all appearance-none cursor-pointer text-base shadow-sm"
+                      <select
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleInputChange}
+                        className="w-full bg-[#111827] border-2 border-white/[0.1] rounded-2xl px-6 py-4 text-white font-black focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all appearance-none cursor-pointer text-base shadow-sm"
                       >
                         <option value="">Select Allocation...</option>
                         {BUDGET_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
@@ -267,45 +251,51 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
               )}
             </div>
 
-            <div className="pt-16 flex items-center justify-between border-t border-white/[0.05]">
-              <button
-                type="button"
-                onClick={prevStep}
-                className={`px-10 py-6 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] transition-all ${
-                  currentStep === 1 
-                  ? 'opacity-0 pointer-events-none' 
-                  : 'text-slate-600 hover:text-white'
-                }`}
-              >
-                Back
-              </button>
-              
-              {currentStep < 6 ? (
+            <div className="pt-16 flex flex-col md:flex-row items-center gap-8 md:justify-between border-t border-white/[0.05]">
+              <div className="flex items-center gap-3 order-2 md:order-1">
+                <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Secure & Confidential Session</p>
+              </div>
+
+              <div className="flex items-center justify-between w-full md:w-auto gap-4 order-1 md:order-2">
                 <button
                   type="button"
-                  onClick={nextStep}
-                  disabled={!isStepValid()}
-                  className={`px-16 py-6 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] transition-all ${
-                    isStepValid() 
-                    ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-2xl shadow-indigo-900/40' 
-                    : 'bg-slate-800 text-slate-600 cursor-not-allowed opacity-50'
-                  }`}
+                  onClick={prevStep}
+                  className={`px-6 md:px-10 py-5 md:py-6 rounded-2xl font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] transition-all ${currentStep === 1
+                      ? 'opacity-0 pointer-events-none'
+                      : 'text-slate-500 hover:text-white'
+                    }`}
                 >
-                  Continue
+                  Back
                 </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!isStepValid() || isSubmitting}
-                  className={`px-20 py-6 rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] transition-all ${
-                    isStepValid() && !isSubmitting
-                    ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-2xl shadow-indigo-900/40' 
-                    : 'bg-slate-800 text-slate-600 cursor-not-allowed opacity-50'
-                  }`}
-                >
-                  {isSubmitting ? 'Securing Data...' : 'Submit Profile'}
-                </button>
-              )}
+
+                {currentStep < 6 ? (
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    disabled={!isStepValid()}
+                    className={`flex-grow md:flex-initial px-10 md:px-16 py-5 md:py-6 rounded-2xl font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] transition-all ${isStepValid()
+                        ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-2xl shadow-indigo-900/40 active:scale-95'
+                        : 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-50'
+                      }`}
+                  >
+                    Next Phase
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={!isStepValid() || isSubmitting}
+                    className={`flex-grow md:flex-initial px-12 md:px-20 py-5 md:py-6 rounded-2xl font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] transition-all ${isStepValid() && !isSubmitting
+                        ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-2xl shadow-indigo-900/40 active:scale-95'
+                        : 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-50'
+                      }`}
+                  >
+                    {isSubmitting ? 'Syncing Profile...' : 'Finalize Audit'}
+                  </button>
+                )}
+              </div>
             </div>
           </form>
         </div>
@@ -316,7 +306,7 @@ export const IntakeForm: React.FC<IntakeFormProps> = ({ onSubmit, onClose }) => 
 
 const InputGroup: React.FC<InputGroupProps> = ({ label, name, value, onChange, placeholder, type = "text", required = true }) => (
   <div>
-    <label className="block text-[11px] font-black text-slate-500 mb-5 uppercase tracking-[0.3em]">{label}</label>
+    <label className="block text-[10px] font-black text-slate-400 mb-4 uppercase tracking-[0.3em]">{label}</label>
     <input
       required={required}
       type={type}
@@ -324,7 +314,7 @@ const InputGroup: React.FC<InputGroupProps> = ({ label, name, value, onChange, p
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-full bg-[#111827] border-2 border-white/[0.05] rounded-2xl px-7 py-5 text-white placeholder:text-slate-800 font-black focus:border-indigo-600 outline-none transition-all text-base shadow-sm"
+      className="w-full bg-[#111827] border-2 border-white/[0.1] rounded-2xl px-6 py-4 text-white placeholder:text-slate-600 font-black focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 outline-none transition-all text-base shadow-sm"
     />
   </div>
 );
@@ -333,18 +323,16 @@ const SelectCard: React.FC<SelectCardProps> = ({ active, onClick, label }) => (
   <button
     type="button"
     onClick={onClick}
-    className={`group relative text-left p-7 rounded-[1.5rem] border-2 transition-all duration-300 flex items-center gap-6 ${
-      active 
-      ? 'bg-indigo-600/10 border-indigo-600 text-white shadow-lg shadow-indigo-900/20' 
-      : 'bg-[#111827] border-white/5 text-slate-500 hover:border-white/10'
-    }`}
+    className={`group relative text-left p-6 rounded-[1.5rem] border-2 transition-all duration-300 flex items-center gap-5 ${active
+      ? 'bg-indigo-600/10 border-indigo-500 text-white shadow-lg shadow-indigo-900/20'
+      : 'bg-[#111827] border-white/10 text-slate-400 hover:border-white/20'
+      }`}
   >
-    <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
-      active ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-slate-700 group-hover:border-slate-600'
-    }`}>
-      {active && <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7" /></svg>}
+    <div className={`w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all ${active ? 'bg-indigo-500 border-indigo-500' : 'bg-transparent border-slate-600 group-hover:border-slate-500'
+      }`}>
+      {active && <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7" /></svg>}
     </div>
-    <span className="font-black text-base tracking-tight leading-tight">{label}</span>
+    <span className="font-black text-[15px] tracking-tight leading-tight">{label}</span>
   </button>
 );
 
