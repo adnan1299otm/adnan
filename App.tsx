@@ -21,7 +21,7 @@ const App: React.FC = () => {
     console.log('painPoints (array):', data.painPoints);
     console.log('channels (array):', data.channels);
 
-    const webhookUrl = 'https://leafiest-hyperadipose-sharon.ngrok-free.dev/webhook/31662f48-d93c-4a91-b923-f6b19fa48253';
+    const webhookUrl = 'https://n8n-nxanmywj.ap-northeast-1.clawcloudrun.com/webhook/059ab257-4b7a-4ce0-ac11-fdcec33f82a6';
 
     try {
       console.log('Sending POST request to:', webhookUrl);
