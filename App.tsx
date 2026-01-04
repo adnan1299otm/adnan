@@ -13,15 +13,41 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleFormSubmit = async (data: IntakeFormData) => {
-    // Debug: Log the complete payload being sent
-    console.log('=== FORM SUBMISSION START ===');
-    console.log('Payload to send:', JSON.stringify(data, null, 2));
-    console.log('techStack (array):', data.techStack);
-    console.log('painPoints (array):', data.painPoints);
-    console.log('channels (array):', data.channels);
+  const normalizeIntakeData = (data: IntakeFormData) => {
+    const getVal = (val: any) => (val && (Array.isArray(val) ? val.length > 0 : true)) ? (Array.isArray(val) ? (val as string[]).join(', ') : val) : 'Not provided';
 
-    const webhookUrl = 'https://n8n-nxanmywj.ap-northeast-1.clawcloudrun.com/webhook/059ab257-4b7a-4ce0-ac11-fdcec33f82a6';
+    const normalized: any = {
+      company_name: getVal(data.companyName),
+      your_name: getVal(data.userName),
+      job_title: getVal(data.jobTitle),
+      email: getVal(data.email),
+      phone: getVal(data.phone),
+      website: getVal(data.websiteUrl),
+      company_size: getVal(data.companySize),
+      current_tools: getVal(data.techStack),
+      primary_pain_point: getVal(data.painPoints),
+      price: getVal(data.budget),
+      timeline: getVal(data.timeline),
+    };
+
+    // Rule 1 & 3: Map industry to company_size and channels to current_tools
+    if (data.industry && data.industry !== 'Not provided') {
+      normalized.company_size = `${normalized.company_size} | Extra: industry=${data.industry}`;
+    }
+
+    if (data.channels && data.channels.length > 0) {
+      normalized.current_tools = `${normalized.current_tools} | Extra: channels=${data.channels.join(', ')}`;
+    }
+
+    return normalized;
+  };
+
+  const handleFormSubmit = async (data: IntakeFormData) => {
+    console.log('=== FORM SUBMISSION START ===');
+    const normalizedData = normalizeIntakeData(data);
+    console.log('Normalized Payload:', JSON.stringify(normalizedData, null, 2));
+
+    const webhookUrl = 'https://n8n-nxanmywj.ap-northeast-1.clawcloudrun.com/webhook/75988002-49f8-4732-a909-243381cb5412';
 
     try {
       console.log('Sending POST request to:', webhookUrl);
@@ -33,7 +59,7 @@ const App: React.FC = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(normalizedData),
       });
 
       console.log('Response status:', response.status);
